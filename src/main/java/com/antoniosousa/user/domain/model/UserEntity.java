@@ -34,5 +34,6 @@ public class UserEntity {
 
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
-    private boolean consumed;
+    private boolean integrated;
+    private boolean notified;
 }

@@ -1,4 +1,4 @@
-package com.antoniosousa.user.exceptions;
+package com.antoniosousa.user.domain.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

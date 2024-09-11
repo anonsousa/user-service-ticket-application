@@ -20,7 +20,8 @@ public interface UserMapper {
     @Mapping(target = "phone", source = "phone")
     @Mapping(target = "password", source = "password")
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "consumed", ignore = true)
+    @Mapping(target = "integrated", ignore = true)
+    @Mapping(target = "notified", ignore = true)
     UserEntity toEntity(UserRequestDto userRequestDto);
 
     @Mapping(target = "id", source = "id")

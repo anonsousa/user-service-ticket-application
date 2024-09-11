@@ -5,7 +5,7 @@ import com.antoniosousa.user.domain.dto.UserResponseDto;
 import com.antoniosousa.user.domain.mapper.UserMapper;
 import com.antoniosousa.user.domain.model.UserEntity;
 import com.antoniosousa.user.domain.repositories.UserRepository;
-import com.antoniosousa.user.exceptions.UserNotFoundException;
+import com.antoniosousa.user.domain.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,7 @@ import java.util.List;
 public class UserService {
 
     private final RabbitNotificationService rabbitNotificationService;
-
     private final UserRepository userRepository;
-
     private final String exchange;
 
     public UserService(RabbitNotificationService rabbitNotificationService,
@@ -52,15 +50,15 @@ public class UserService {
     }
 
 
-
     private void sendToQueue(UserEntity userEntity, String exchange) {
         try {
+
             rabbitNotificationService.sendToQueue(userEntity, exchange);
-            userEntity.setConsumed(true);
-            userRepository.save(userEntity);
+            userRepository.updateIntegratedStatus(userEntity.getId(), true);
+
         } catch (RuntimeException exception) {
-            userEntity.setConsumed(false);
+
+            userRepository.updateIntegratedStatus(userEntity.getId(), false);
         }
-        userRepository.save(userEntity);
     }
 }
